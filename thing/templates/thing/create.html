@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+    <div class="post-title">
+        <h1>New thing</h1>
+    </div>
+    <div class="spacer"></div>
+    <form class="post-form">
+        <div class="line">
+
+            <h>Title:</h>
+            <label>
+                <input id="id_title_thing" name="title" type="text" class="thing">
+                <p id="id_warning_title" class="invisible warning-text">This should warn you!!!</p>
+            </label>
+        </div>
+        <div class="line">
+            <h> Content:</h>
+            <label><textarea cols="40" id="id_content_thing" name="content" rows="10" class="thing"></textarea>
+                <p id="id_warning_content" class="invisible warning-text">This should warn you!!!</p>
+            </label>
+
+        </div>
+        <div class="line">
+
+            <h>Price:</h>
+            <label>
+                <input id="id_price_thing" name="size" type="text" class="thing">
+                <p id="id_warning_price" class="invisible warning-text">This should warn you!!!</p>
+            </label>
+        </div>
+
+    </form>
+    <button id="save_thing" class="save btn btn-default">Save</button>
+
+    {% block js %}
+        <script src="{% static 'src/js/posts.js' %}"></script>
+    {% endblock %}
+{% endblock %}
