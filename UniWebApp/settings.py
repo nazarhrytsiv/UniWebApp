@@ -117,3 +117,9 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = STATIC_URL
+
+
+MEDIA_URL = '/static/src/img/'
+
+
+MEDIA_ROOT = MEDIA_URL
