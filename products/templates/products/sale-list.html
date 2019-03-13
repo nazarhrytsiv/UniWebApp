@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    {% for obj in object_list %}
+        {{ obj.title }}
+        {{ obj.sale }}
+        <img src="{{ obj.image.url }}" class="img-fluid" /><br>
+
+    {% endfor %}
+{% endblock %}

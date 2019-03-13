@@ -18,14 +18,22 @@ from django.conf.urls.static import static
 
 from django.contrib import admin
 from django.urls import path, include
-from products.views import ProductListView,ProductDetailView
-
+from products.views import ProductListView,ProductDetailView,create_product, edit_product
+from thing.views import create, show_things
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
     path('', include('thing.urls')),
     path('products/', ProductListView.as_view()),
-    path('products/<int:pk>/', ProductDetailView.as_view()),
+    path('thingcr/', create),
+    path('product/create/', create_product),
+    path('product/<int:pk>/', ProductDetailView.as_view()),
+    path('product/<int:pk>/edit/', edit_product),
+    # path('sale/', ProductSaleListView.as_view()),
+    # path('sale/', product),
 ]
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
