@@ -15,28 +15,41 @@ from django.http import HttpResponse
 
 # Create your views here.
 #
-# class ProductCreateView(TemplateView):
-#     template_name = 'products/create-product.html'
-#
-#     def get(self, request, **kwargs):
-#         form = ProductForm
-#         return render(request,self.template_name,{'form':form})
-#
-#     def post(self,request):
-#         form = ProductForm(request.POST)
-#         if form.is_valid():
-#             post = form.save()
-#             post.save()
-#             form = ProductForm
-#             return redirect('products/')
-#         args = {'form' : form,}
-#         return render(request,self.template_name, args)
-# class ProductSaleListView(ListView):
-#     template_name = "products/sale-list.html"
-#
-#     def get_queryset(self, *args, **kwargs):
-#         request = self.request
-#         return Product.get_products_with_sale()
+
+class ProductSaleListView(ListView):
+    template_name = "products/sale-list.html"
+
+    def get_queryset(self, *args, **kwargs):
+        request = self.request
+        return Product.objects.sales()
+
+
+class ProductSaleDetailView(DetailView):
+    template_name = "products/sale-detail.html"
+
+    def get_queryset(self, *args, **kwargs):
+        request = self.request
+        return Product.objects.sales()
+
+
+class ProductDetailSlugView(DetailView):
+    queryset = Product.objects.all()
+    template_name = "products/detail.html"
+
+    def get_object(self, *args, **kwargs):
+        request = self.request
+        slug = self.kwargs.get('slug')
+        try:
+            instance = Product.objects.get(slug=slug)
+        except Product.DoesNotExist:
+            raise Http404("Not found..")
+        except Product.MultipleObjectsReturned:
+            qs = Product.objects.filter(slug=slug)
+            instance = qs.first()
+        except:
+            raise Http404("Cannot get a object")
+        return instance
+
 
 
 # List of all Products
@@ -47,6 +60,13 @@ class ProductListView(ListView):
         request = self.request
         return Product.get_all()
 
+
+def make_sale_all(request):
+    try:
+        Product.get_all().update(sale=True)
+        return HttpResponse(status=200)
+    except:
+        return HttpResponse(status=404)
 
 # Detail of single Product
 class ProductDetailView(DetailView):
@@ -59,7 +79,7 @@ class ProductDetailView(DetailView):
     def get_object(self, *args, **kwargs):
         request = self.request
         pk = self.kwargs.get('pk')
-        instance = Product.get_by_id(pk)
+        instance = Product.objects.get_by_id(pk)
         if instance is None:
             raise Http404("Product doesn`t exist")
         return instance

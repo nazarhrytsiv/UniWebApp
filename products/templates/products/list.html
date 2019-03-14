@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block content %}
 {% for obj in object_list %}
 {{ obj.title }}
 {% endfor %}
+{#    <button id="save_sale" class="save btn btn-default" onclick="{% url 'sale_all'  %}}" name="make_sale_all">SALE</button>#}
+
 {% endblock %}
