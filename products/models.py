@@ -3,6 +3,8 @@ from django.urls import reverse
 from django.db.models.signals import pre_save, post_save
 
 from .utils import unique_slug_generator
+
+
 # Create your models here.
 
 
@@ -15,11 +17,10 @@ class ProductManager(models.Manager):
             return None
 
     def get_by_id(self, id):
-        qs = Product.objects.filter(id=id) # Product.objects == self.get_queryset()
+        qs = Product.objects.filter(id=id)  # Product.objects == self.get_queryset()
         if qs.count() == 1:
             return qs.first()
         return None
-
 
 
 class Product(models.Model):
@@ -43,7 +44,6 @@ class Product(models.Model):
         products = Product.objects.all()
         return products
 
-
     @staticmethod
     def change_to_sale():
         return Product.get_all().update(sale=True)
@@ -52,5 +52,6 @@ class Product(models.Model):
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
+
 
 pre_save.connect(product_pre_save_receiver, sender=Product)

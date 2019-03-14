@@ -131,7 +131,7 @@ def create_product(request):
 
 
 def edit_product(request, pk):
-    post = Product.get_by_id(pk)
+    post = Product.objects.get_by_id(pk)
     if request.method == "PUT":
         data = json.loads(request.body)
         errors = validate_data_product(data)
