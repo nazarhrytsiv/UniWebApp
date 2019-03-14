@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% block content %}
 {% for obj in object_list %}
-{{ obj.title }}
+    <a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a>
 {% endfor %}
 {#    <button id="save_sale" class="save btn btn-default" onclick="{% url 'sale_all'  %}}" name="make_sale_all">SALE</button>#}
 

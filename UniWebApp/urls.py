@@ -27,17 +27,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
     path('', include('thing.urls')),
-    path('products/', ProductListView.as_view()),
-    path('thingcr/', create),
-    # path('sale_all/', make_sale_all, name='make-sale-all'),
-    path('sale/', ProductSaleListView.as_view()),
-    path('sale/<int:pk>/', ProductSaleDetailView.as_view()),
+    path('products/', include("products.urls")),
     path('product/create/', create_product),
-    path('products/<slug>/', ProductDetailSlugView.as_view()),
-    path('product/<int:pk>/', ProductDetailView.as_view()),
-    path('product/<int:pk>/edit/', edit_product),
-    path('sale/', ProductSaleListView.as_view()),
-    # path('sale/', product),
+    # path('thingcr/', create),
+    # path('sale_all/', make_sale_all, name='make-sale-all'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+from django.urls import path, include
+from products.views import ProductListView,ProductDetailView,create_product, edit_product, make_sale_all, ProductDetailSlugView, ProductSaleListView,ProductSaleDetailView
+from thing.views import create, show_things
+
+
