@@ -32,13 +32,13 @@ $(document).ready(function () {
 
 
 
-function update_product(id) {
+function update_product(slug) {
     $(".product").on('focus', function () {
         $(this).removeClass("invalid");
         $(this).next().addClass("invisible");
     });
     var _data = {
-        'id': id,
+        'slug': slug,
         'title': $('#id_title_product').val(),
         'description': $('#id_description_product').val(),
         'price': $('#id_price_product').val(),
@@ -48,7 +48,7 @@ function update_product(id) {
 
     $.ajax({
         type: "PUT",
-        url: '/product/' + id + '/edit/',
+        url: '/products/' + slug + '/edit/',
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(_data),
         success: function (response) {

@@ -130,25 +130,20 @@ def create_product(request):
         return render(request, 'products/create-product.html')
 
 
-def edit_product(request, pk):
-    post = Product.objects.get_by_id(pk)
+def edit_product(request, slug):
+    post = Product.objects.get_by_slug(slug=slug)
     if request.method == "PUT":
         data = json.loads(request.body)
         errors = validate_data_product(data)
         if not errors:
             product = Product(**data)
             #checking if we changed title
-            if post.title == data["title"]:
-                product.save()
-                return HttpResponse(status=201)
-            else:
-                try:
-                    product.save()
-                    return HttpResponse(status=201)
-                except IntegrityError:
-                    errors = {}
-                    errors["title"] = "Product with this title already exists."
-                    return HttpResponse(json.dumps(errors), status=400)
+            post.title = product.title
+            post.description = product.description
+            post.price = product.price
+            post.sale = product.sale
+            post.save()
+            return HttpResponse(status=201)
         else:
             return HttpResponse(json.dumps(errors), status=400)
     else:

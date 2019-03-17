@@ -16,6 +16,12 @@ class ProductManager(models.Manager):
         except:
             return None
 
+    def get_by_slug(self, slug):
+        try:
+            return Product.objects.get(slug=slug)
+        except:
+            return None
+
     def get_by_id(self, id):
         qs = Product.objects.filter(id=id)  # Product.objects == self.get_queryset()
         if qs.count() == 1:
@@ -25,7 +31,7 @@ class ProductManager(models.Manager):
 
 class Product(models.Model):
     title = models.CharField(max_length=120)
-    slug = models.SlugField(blank=True)
+    slug = models.SlugField(blank=True, unique=True)
     description = models.TextField()
     price = models.DecimalField(decimal_places=2, max_digits=20, null=True)
     image = models.ImageField(upload_to='', null=True, blank=True)

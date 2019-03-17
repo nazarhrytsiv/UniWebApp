@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-{% for obj in object_list %}
-    <a href='{{ obj.get_absolute_url }}'>{{ obj.title }}</a>
-{% endfor %}
-{#    <button id="save_sale" class="save btn btn-default" onclick="{% url 'sale_all'  %}}" name="make_sale_all">SALE</button>#}
+    {% for obj in object_list %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+{#              <a class="mr-2" href="#">{{ post.author }}</a>#}
+{#              <small class="text-muted">{{ post.date_posted }}</small>#}
+            </div>
+            <h2><a class="article-title" href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h2>
+            <p class="article-content">{{ obj.description}}</p>
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
 
-{% endblock %}
