@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import check_password
 
 
 User = get_user_model()
@@ -13,8 +14,18 @@ class LoginForm(forms.Form):
         username = self.cleaned_data.get('username')
         qs = User.objects.filter(username=username)
         if not qs.exists():
-            raise forms.ValidationError("Your login or password is incorrect")
+            raise forms.ValidationError("Your login is incorrect!")
         return username
+
+    def clean_password(self):
+        username = self.cleaned_data.get('username')
+        qs = User.objects.get(username=username)
+        password = self.cleaned_data.get('password')
+        # print(qs.check_password)
+        if check_password(password, qs.password) == False:
+            raise forms.ValidationError("Your password wrong!")
+        else:
+            return password
 
 
 # TODO:validate for password

@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import LoginForm, RegisterForm
-from django.contrib.auth import authenticate, login,get_user_model
+from django.contrib.auth import authenticate, login, get_user_model, logout
 
 User = get_user_model()
 
@@ -35,3 +35,8 @@ def register_page(request):
         new_user = User.objects.create_user(username,email,password)
         print(new_user)
     return render(request, 'registration.html', context)
+
+
+def logout_page(request):
+    logout(request)
+    return redirect('/')

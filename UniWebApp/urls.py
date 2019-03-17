@@ -20,24 +20,23 @@ from django.contrib import admin
 from django.urls import path, include
 from products.views import ProductListView,ProductDetailView,create_product, edit_product, make_sale_all, ProductDetailSlugView, ProductSaleListView,ProductSaleDetailView
 from thing.views import create, show_things
-from .views import login_page, register_page
+from .views import login_page, register_page,logout_page
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
-    path('', include('thing.urls')),
-    path('login/', login_page),
-    path('register/', register_page),
+    path('', ProductListView.as_view(), name='product-home'),
+    path('login/', login_page, name='login'),
+    path('logout/', logout_page, name='logout'),
+    path('register/', register_page, name='register'),
     path('products/', include("products.urls")),
     path('product/create/', create_product),
     # path('sale_all/', make_sale_all, name='make-sale-all'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-from django.urls import path, include
-from products.views import ProductListView,ProductDetailView,create_product, edit_product, make_sale_all, ProductDetailSlugView, ProductSaleListView,ProductSaleDetailView
-from thing.views import create, show_things
+
 
 
