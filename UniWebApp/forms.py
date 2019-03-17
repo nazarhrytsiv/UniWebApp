@@ -9,6 +9,15 @@ class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
 
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        qs = User.objects.filter(username=username)
+        if not qs.exists():
+            raise forms.ValidationError("Your login or password is incorrect")
+        return username
+
+
+# TODO:validate for password
 
 class RegisterForm(forms.Form):
     username = forms.CharField()
@@ -34,5 +43,5 @@ class RegisterForm(forms.Form):
         email = self.cleaned_data.get('email')
         qs = User.objects.filter(email=email)
         if qs.exists():
-            raise forms.ValidationError("Username already exist")
+            raise forms.ValidationError("Email already exist")
         return email
