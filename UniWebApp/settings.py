@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'products',
     'carts',
     'customauth',
+    'orders',
 ]
 
 AUTH_USER_MODEL = 'customauth.CustomUser'
