@@ -32,8 +32,6 @@ class CartManager(models.Manager):
         return self.model.objects.create(user=user_obj)
 
 
-
-
 class Cart(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete='CASCADE')
     products = models.ManyToManyField(Product, blank=True)
@@ -46,7 +44,6 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.id)
-
 
 
 def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
@@ -74,5 +71,6 @@ def m2m_changed_cart_receiver_sale(sender,instance,*args,**kwargs):
             price_with_sale += float(product.price)
     instance.total = price_with_sale
     instance.save()
+
 
 m2m_changed.connect(m2m_changed_cart_receiver_sale,sender=Cart.products.through)

@@ -5,16 +5,18 @@ from django.contrib.auth import authenticate, login, get_user_model, logout
 
 User = get_user_model()
 
+
 def login_page(request):
     form = LoginForm(request.POST or None)
     context = {
         "form":form
     }
     if form.is_valid():
-        username = form.cleaned_data.get("username")
+        # print("form valid")
+        email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
-        user = authenticate(request, username=username, password=password)
-        # print(request.user.is_authenticated)
+        user = authenticate(request, email=email, password=password)
+        print(request.user.is_authenticated)
         if user is not None:
             login(request,user)
             return redirect('/')
@@ -23,17 +25,20 @@ def login_page(request):
 
     return render(request, 'login.html', context)
 
+
 def register_page(request):
     form = RegisterForm(request.POST or None)
     context = {
         'form':form
     }
     if form.is_valid():
-        username = form.cleaned_data.get("username")
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
-        new_user = User.objects.create_user(username,email,password)
-        print(new_user)
+        try:
+            User.create_user(email, password)
+            return redirect('/login')
+        except:
+            HttpResponse(status=403)
     return render(request, 'registration.html', context)
 
 

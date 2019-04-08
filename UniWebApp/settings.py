@@ -31,11 +31,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user.apps.UserConfig',
-    'thing.apps.ThingConfig',
-    'products.apps.ProductsConfig',
-    'carts.apps.CartsConfig',
+    'user',
+    'products',
+    'carts',
+    'customauth',
 ]
+
+AUTH_USER_MODEL = 'customauth.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,7 +75,7 @@ WSGI_APPLICATION = 'UniWebApp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'mr',
+        'NAME': 'admin',
     }
 }
 

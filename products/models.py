@@ -16,6 +16,12 @@ class ProductManager(models.Manager):
         except:
             return None
 
+    def not_sales(self):
+        try:
+            return Product.objects.filter(sale=False)
+        except:
+            return None
+
     def get_by_slug(self, slug):
         try:
             return Product.objects.get(slug=slug)
@@ -52,11 +58,6 @@ class Product(models.Model):
     def get_all():
         products = Product.objects.all()
         return products
-
-    @staticmethod
-    def change_to_sale():
-        return Product.get_all().update(sale=True)
-
 
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:

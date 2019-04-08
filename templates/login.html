@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-{% if not request.user.is_authenticated %}
+{% if not user.is_authenticated %}
 <form method="POST">
 
   <div class="container-login">
@@ -10,9 +10,9 @@
      </div>
 </form>
 {% endif %}
-{% if request.user.is_authenticated %}
+{% if user.is_authenticated %}
     <div class="container-login">
-        <center><h1>You already authenticated</h1></center>
+        <h1>You already authenticated</h1>
     </div>
     {% endif %}
 {% endblock %}

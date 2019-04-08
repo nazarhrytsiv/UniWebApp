@@ -13,7 +13,7 @@ $(document).ready(function () {
             };
         $.ajax({
             type: "POST",
-            url: 'http://localhost:8000/product/create/',
+            url: 'http://localhost:8000/products/create/',
             contentType: 'application/json; charset=utf-8',
             data: JSON.stringify(_data),
             success: function (_data) {

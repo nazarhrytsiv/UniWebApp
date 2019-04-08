@@ -10,6 +10,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
 
 
     {% load staticfiles %}
@@ -24,22 +26,24 @@
     <script src="{% static 'src/js/products.js' %}"></script>
 
     {% if title %}
-        <title>Django Blog - {{ title }}</title>
+        <title>Shopping center - {{ title }}</title>
     {% else %}
-        <title>Django Blog</title>
+        <title>Shop</title>
     {% endif %}
 </head>
 <body>
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'product-home' %}">Django Blog</a>
+          <a class="navbar-brand mr-4" href="{% url 'product-home' %}">Shop-online</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{% url 'product-home' %}">Home</a>
+              <a class="nav-item nav-link" href="{% url 'product-home' %}">Products</a>
+                <a class="nav-item nav-link" href="{% url 'product:sale' %}">Sale products</a>
+                <a class="nav-item nav-link" href="{% url 'cart:home' %}">{{ request.session.cart_items }} <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
             </div>
             <!-- Navbar Right Side -->
              {% if not request.user.is_authenticated %}
@@ -65,16 +69,15 @@
 
           {% endblock %}
         </div>
-        {% if request.user.is_authenticated %}
+        {% if request.user.is_superuser %}
           <div class="col-md-4">
             <div class="content-section">
-            <h3>Our Sidebar</h3>
-            <p class='text-muted'>You can put any information here you'd like.
+            <h3>Admin Panel</h3>
+            <p class='text-muted'>Choose the command for shop.
               <ul class="list-group">
-                <li class="list-group-item list-group-item-light">Latest Posts</li>
-                <li class="list-group-item list-group-item-light">Announcements</li>
-                <li class="list-group-item list-group-item-light">Calendars</li>
-                <li class="list-group-item list-group-item-light">etc</li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'product:create' %}">Create</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'product:make-sale-on' %}">Make sale</a></li>
+                <li class="list-group-item list-group-item-light"><a href="{% url 'product:make_sale_off' %}">Off sale for items</a></li>
               </ul>
             </p>
           </div>

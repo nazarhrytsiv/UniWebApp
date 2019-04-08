@@ -2,6 +2,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, TemplateView
 from .models import Product
+from carts.models import Cart
 from django.shortcuts import render
 from djongo.models import json
 from django.shortcuts import render, get_object_or_404
@@ -10,8 +11,8 @@ import json
 from django.db import IntegrityError
 from django.http import HttpResponse
 
-# from products.forms import ProductForm
 
+# from products.forms import ProductForm
 
 # Create your views here.
 #
@@ -36,6 +37,12 @@ class ProductDetailSlugView(DetailView):
     queryset = Product.objects.all()
     template_name = "products/detail.html"
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductDetailSlugView, self).get_context_data(*args,**kwargs)
+        cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+        context['cart'] = cart_obj
+        return context
+
     def get_object(self, *args, **kwargs):
         request = self.request
         slug = self.kwargs.get('slug')
@@ -51,7 +58,6 @@ class ProductDetailSlugView(DetailView):
         return instance
 
 
-
 # List of all Products
 class ProductListView(ListView):
     template_name = "products/list.html"
@@ -61,12 +67,21 @@ class ProductListView(ListView):
         return Product.get_all()
 
 
-def make_sale_all(request):
+def make_sale_off(request):
     try:
-        Product.get_all().update(sale=True)
-        return HttpResponse(status=200)
+        Product.objects.sales().update(sale=False)
+        return redirect('product-home')
     except:
-        return HttpResponse(status=404)
+        return HttpResponse(status=301)
+
+
+def make_sale_on(request):
+    try:
+        Product.objects.not_sales().update(sale=True)
+        return redirect('product-home')
+    except:
+        return HttpResponse(status=301)
+
 
 # Detail of single Product
 class ProductDetailView(DetailView):
@@ -92,7 +107,7 @@ def validate_data_product(posts):
     else:
         if len(posts['title']) < 3:
             errors['title'] = "Len of title must be biggest then 3 characters"
-        elif len(posts['title']) > 10:
+        elif len(posts['title']) > 15:
             errors['title'] = "Len of title must be less then 10 characters"
     if not posts['description']:
         errors['title'] = "This field is required!"
@@ -103,8 +118,8 @@ def validate_data_product(posts):
         if not posts['price']:
             errors['price'] = "This field is required!"
         else:
-            size = int(posts['price'])
-            if size <= 0:
+            size = float(posts['price'])
+            if size <= 0.0:
                 errors['price'] = "Price must be biggest then 0"
     except:
         errors['price'] = "Price must be integer!"
@@ -137,7 +152,7 @@ def edit_product(request, slug):
         errors = validate_data_product(data)
         if not errors:
             product = Product(**data)
-            #checking if we changed title
+            # checking if we changed title
             post.title = product.title
             post.description = product.description
             post.price = product.price
