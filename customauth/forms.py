@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import check_password
 
 from .models import CustomUser
-# User = get_user_model()
 
 
 class LoginForm(forms.Form):
@@ -13,8 +12,6 @@ class LoginForm(forms.Form):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         qs = CustomUser.objects.filter(email=email)
-
-        print("heeeffe")
         if not qs.exists():
             print("heeee")
             raise forms.ValidationError("Your login is incorrect!")
@@ -25,17 +22,13 @@ class LoginForm(forms.Form):
         try:
             qs = CustomUser.objects.get(email=email)
             password = self.cleaned_data.get('password')
-
-            if check_password(password, qs.password) == False:
+            if not check_password(password, qs.password):
                 raise forms.ValidationError("Your password wrong!")
             else:
                 return password
         except:
             raise forms.ValidationError("Your Email is does not exists")
 
-
-
-# TODO:validate for password
 
 class RegisterForm(forms.Form):
     # username = forms.CharField()

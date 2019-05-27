@@ -2,16 +2,23 @@
 {% load staticfiles %}
 {% block content %}
     {% for obj in object_list %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-{#              <a class="mr-2" href="#">{{ post.author }}</a>#}
-{#              <small class="text-muted">{{ post.date_posted }}</small>#}
-            </div>
-            <h2><a class="article-title" href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h2>
-            <p class="article-content">{{ obj.description}}</p>
-          </div>
-        </article>
+
+        <div class="row-sm-12">
+  <div class="col-sm-12">
+    <div class="card" style="margin: 8px">
+      <div class="card-body">
+      <div style="float: left;margin-right: 10px">
+          <img src="{% static 'src/img/hmgoepprod.jpg' %}" height="150" width="120" />
+      </div>
+      <div style="overflow: hidden;margin-bottom: 50px;">
+          <h5 class="card-title">{{ obj.title }}</h5>
+          <p class="card-text">{{ obj.price}}$</p>
+      </div>
+          <a href="{{ obj.get_absolute_url }}" class="btn btn-primary">Open product</a>
+      </div>
+    </div>
+  </div>
+</div>
     {% endfor %}
 {% endblock content %}
 

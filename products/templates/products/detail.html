@@ -1,17 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load staticfiles %}
+
+
 
     <div class="row">
-        <div class="col-12 col-md-6">
-            <h1>{{ object.title }}</h1><br>
-            {{ object.description }}<br>
-            {{ object.price }}<br>
-            {% if object.sale %}
-                <span>With Sale product</span>
-            {% endif %}
+
+    <div style="float: left;">
+          <img src="{% static 'src/img/hmgoepprod.jpg' %}" height="250" width="160" />
+      </div>
+            <div class="col-12 col-md-10">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><h3>{{ object.title }}</h3></li>
+              <li class="list-group-item">{{ object.description }}</li>
+              <li class="list-group-item">{{ object.price }}</li>
+              <li class="list-group-item">{% if object.sale %}Product have sale 10%{% endif %}</li>
+            </ul>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-2" style="padding: 0px">
+            {% if request.user.is_authenticated %}
+            {% if not request.user.is_superuser %}
             {% include 'products/snippets/update-cart.html' with product=object cart=cart %}
+            {% endif %}
+            {% endif %}
+            {% if request.user.is_superuser %}
+                <a href="{% url "product:edit" slug=object.slug  %}"  style="width: 81px;" class='btn btn-warning'>Edit</a>
+            {% endif %}
         </div>
     </div>
 {#<img src="{{ object.image.url }}" class="img-fluid" /><br>#}

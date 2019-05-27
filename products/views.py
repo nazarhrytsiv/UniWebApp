@@ -1,12 +1,9 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView, DetailView
 from .models import Product
 from carts.models import Cart
-from django.shortcuts import render
 from djongo.models import json
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 import json
 from django.db import IntegrityError
 from django.http import HttpResponse
@@ -26,10 +23,8 @@ class ProductSaleListView(ListView):
 
 
 class ProductSaleDetailView(DetailView):
-    template_name = "products/sale-detail.html"
 
     def get_queryset(self, *args, **kwargs):
-        request = self.request
         return Product.objects.sales()
 
 
@@ -70,7 +65,7 @@ class ProductListView(ListView):
 def make_sale_off(request):
     try:
         Product.objects.sales().update(sale=False)
-        return redirect('product-home')
+        return redirect('product:sale')
     except:
         return HttpResponse(status=301)
 
@@ -78,7 +73,7 @@ def make_sale_off(request):
 def make_sale_on(request):
     try:
         Product.objects.not_sales().update(sale=True)
-        return redirect('product-home')
+        return redirect('product:sale')
     except:
         return HttpResponse(status=301)
 
@@ -152,7 +147,7 @@ def edit_product(request, slug):
         errors = validate_data_product(data)
         if not errors:
             product = Product(**data)
-            # checking if we changed title
+            # rewrite all data
             post.title = product.title
             post.description = product.description
             post.price = product.price

@@ -1,44 +1,46 @@
 {% extends 'base.html' %}
-
 {% block content %}
+
     <div class="post-title">
-        <h1>Edit {{ post.name }}</h1>
+        <h1>Edit {{ post.name }} {{ is_sale }}</h1>
     </div>
     <div class="spacer"></div>
+
     <form class="post-form">
-        <div class="line">
-
-            <h>Title:</h>
-            <label>
-                <input id="id_title_product" maxlength="30" name="name" type="text" value="{{ post.title }}" class="product">
-                <p id="id_warning_title" class="invisible warning-text">This should warn you!!!</p>
-            </label>
+        <div class="form-group">
+            <label for="id_title_product">Title:</label>
+            <input id="id_title_product" maxlength="30" name="name" type="text" value="{{ post.title }}" class="form-control">
+            <p id="id_warning_title" class="invisible warning-text">This should warn you!!!</p>
         </div>
 
-        <div class="line">
-            <h> Description:</h>
-            <label><textarea cols="40" id="id_description_product" maxlength="620" name="description"
-                             rows="10" class="product">{{ post.description }}</textarea>
-                <p id="id_warning_description" class="invisible warning-text">This should warn you!!!</p>
-            </label>
+        <div class="form-group">
+            <label for="id_description_product">Description:</label>
+            <textarea  id="id_description_product" maxlength="620" name="description"
+                             rows="5" class="form-control">{{ post.description }}</textarea>
+            <p id="id_warning_description" class="invisible warning-text">This should warn you!!!</p>
+
         </div>
 
-        <div class="line">
+        <div class="form-group">
 
-            <h> Price:</h>
-            <label>
-                <input id="id_price_product" maxlength="30" name="price" type="text" value="{{ post.price }}" class="product">
-                <p id="id_warning_price" class="invisible warning-text">This should warn you!!!</p>
-            </label>
+           <label for="id_price_product">Price:</label>
+            <input id="id_price_product" maxlength="30" name="price" type="text" value="{{ post.price }}" class="form-control">
+            <p id="id_warning_price" class="invisible warning-text">This should warn you!!!</p>
         </div>
 
-        <div class="line">
+        <div class="form-group">
+            <input type="file" name="pic" accept="image/*">
+        </div>
 
-            <h>Is sale?:</h>
-            <label>
-                <input id="id_sale_product" maxlength="30" name="sale" type="checkbox" value="{{ post.sale }}" class="product">
-                <p id="id_warning_sale" class="invisible warning-text">This should warn you!!!</p>
-            </label>
+        <div class="form-group">
+            <label class="form-check-label" for="id_sale_product">Sale:</label>
+            {% if post.sale %}
+            <input id="id_sale_product" name="sale" type="checkbox" class=form-check-input" value="{{ post.sale }}" checked>
+            {% elif not post.sale %}
+            <input id="id_sale_product" name="sale" type="checkbox" class=form-check-input" value="{{ post.sale }}">
+            {% endif %}
+
+             <p id="id_warning_sale" class="invisible warning-text">This should warn you!!!</p>
         </div>
 
     </form>

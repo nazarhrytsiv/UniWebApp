@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <h1>Orders</h1>
+
+        <table class="table" style="background: #FFF">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Order_id</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for obj in object %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+                <td><a href="{% url 'orders:detail' order_id=obj.order_id%}">{{ obj.order_id }}</a>
+                </td>
+
+              <td>{{ obj.status}}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+{#    {% else %}#}
+{#        <h3>You don`t have orders</h3>#}
+{#    {% endif %}#}
+{% endblock %}

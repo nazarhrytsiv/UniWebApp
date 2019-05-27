@@ -8,36 +8,28 @@
     </div>
     <div class="spacer"></div>
     <form class="post-form">
-        <div class="line">
-
-            <h>Title:</h>
-            <label>
-                <input id="id_title_product" name="title" type="text" class="product">
-                <p id="id_warning_title" class="invisible   warning-text">This should warn you!!!</p>
-            </label>
-        </div>
-        <div class="line">
-            <h> Description:</h>
-            <label><textarea cols="40" id="id_description_product" name="description" rows="10" class="product"></textarea>
-                <p id="id_warning_description" class="invisible warning-text">This should warn you!!!</p>
-            </label>
-
-        </div>
-        <div class="line">
-
-            <h>Price:</h>
-            <label>
-                <input id="id_price_product" name="price" type="text" class="product">
-                <p id="id_warning_price" class="invisible warning-text">This should warn you!!!</p>
-            </label>
+        <div class="form-group">
+            <label for="id_title_product">Title:</label>
+            <input class="form-control" id="id_title_product" name="title" type="text">
+            <p id="id_warning_title" class="invisible   warning-text">This should warn you!!!</p>
         </div>
 
-        <div class="line">
-            <h>Is sale?:</h>
-            <label>
-                <input id="id_sale_product" name="sale" type="checkbox">
-                <p id="id_warning_sale" class="invisible warning-text">This should warn you!!!</p>
-            </label>
+        <div class="form-group">
+            <label for="id_description_product">Description:</label>
+            <textarea id="id_description_product" name="description" rows="5" class="form-control"></textarea>
+            <p id="id_warning_description" class="invisible warning-text">This should warn you!!!</p>
+        </div>
+
+        <div class="form-group">
+            <label for="id_price_product">Price:</label>
+            <input id="id_price_product" name="price" type="text" class="form-control">
+            <p id="id_warning_price" class="invisible warning-text">This should warn you!!!</p>
+        </div>
+
+        <div class="form-group">
+            <label class="form-check-label" for="id_sale_product">Sale:</label>
+            <input id="id_sale_product" name="sale" type="checkbox" class=form-check-input">
+            <p id="id_warning_sale" class="invisible warning-text">This should warn you!!!</p>
         </div>
 
 

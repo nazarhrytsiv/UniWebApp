@@ -36,9 +36,11 @@ INSTALLED_APPS = [
     'carts',
     'customauth',
     'orders',
+    'django_extensions',
 ]
 
 AUTH_USER_MODEL = 'customauth.CustomUser'
+LOGIN_URL = '/login'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -50,6 +52,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'UniWebApp.urls'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'nazar.hrytsiv7@gmail.com'
+EMAIL_HOST_PASSWORD = 'hrytsivnazar98'
+
 
 TEMPLATES = [
     {

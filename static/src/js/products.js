@@ -18,6 +18,7 @@ $(document).ready(function () {
             data: JSON.stringify(_data),
             success: function (_data) {
                 console.log('created!');
+                window.location.href="/products"
             },
             error: function (data) {
                 errors = JSON.parse(data.responseText);
@@ -53,6 +54,7 @@ function update_product(slug) {
         data: JSON.stringify(_data),
         success: function (response) {
             console.log('edited');
+            window.location.href="/products/"+ slug + "/"
         },
         error: function (data) {
             errors = JSON.parse(data.responseText);

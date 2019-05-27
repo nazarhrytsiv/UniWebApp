@@ -16,8 +16,8 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from products.views import ProductListView,create_product, make_sale_off, make_sale_on
-from carts.views import cart_home
+from products.views import ProductListView
+from customauth.views import sent
 from customauth.views import login_page, register_page,logout_page
 from django.conf.urls.static import static
 from django.conf import settings
@@ -31,6 +31,8 @@ urlpatterns = [
     path('register/', register_page, name='register'),
     path('cart/', include("carts.urls", namespace='cart')),
     path('products/', include("products.urls", namespace='product')),
+    path('orders/', include("orders.urls", namespace='orders')),
+    path('send_mail/', sent, name='send_mail'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
