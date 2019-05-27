@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+    <div class="post-title">
+        <h1>Send Mail</h1>
+    </div>
+    <div class="spacer"></div>
+    <form class="post-form">
+        <div class="form-group">
+            <label for="id_title_mail">Title:</label>
+            <input class="form-control" id="id_title_mail" name="title_mail" type="text">
+            <p id="id_warning_title" class="invisible warning-text">This should warn you!!!</p>
+        </div>
+
+        <div class="form-group">
+            <label for="id_text_mail">Text:</label>
+            <textarea id="id_text_mail" name="text_mail" rows="5" class="form-control"></textarea>
+            <p id="id_warning_text" class="invisible warning-text">This should warn you!!!</p>
+        </div>
+
+        <div class="form-group">
+            <label for="id_from_mail">Your email:</label>
+            <input id="id_from_mail" name="mail_from" type="email" class="form-control" placeholder="name@example.com">
+            <p id="id_warning_from" class="invisible warning-text">This should warn you!!!</p>
+        </div>
+
+            <div class="form-group">
+                <label for="id_to_mail">Your email:</label>
+                <input id="id_to_mail" name="mail_to" type="text" class="form-control" data-role="tagsinput">
+                <p id="id_warning_to" class="invisible warning-text">This should warn you!!!</p>
+            </div>
+
+    </form>
+    <button id="save_mail" class="save btn btn-default">Save</button>
+
+
+{% endblock %}
